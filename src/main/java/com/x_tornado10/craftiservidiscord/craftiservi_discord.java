@@ -9,19 +9,24 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.apache.logging.log4j.CloseableThreadContext;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.security.auth.login.Configuration;
+import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public final class craftiservi_discord extends JavaPlugin {
     private static craftiservi_discord instance;
@@ -117,6 +122,8 @@ public final class craftiservi_discord extends JavaPlugin {
         jda.addEventListener(new DiscordListener());
         pm.registerEvents(new MinecraftChatListener(), this);
 
+        saveResource("error-icon.png", true);
+
     }
 
     @Override
@@ -134,12 +141,15 @@ public final class craftiservi_discord extends JavaPlugin {
 
         if (chatChannel == null || content == null) return;
 
+        String url = "https://mc-heads.net/avatar/" + p.getUniqueId();
+        String error_url = "https://crafti-servi.com/error-icon.png";
+
         EmbedBuilder builder = new EmbedBuilder()
                 .setColor(color)
                 .setAuthor(
                         contentInAuthorLine ? content : p.getDisplayName(),
                         null,
-                        "https://mc-heads.net/avatar/" + p.getUniqueId().toString()
+                        checkURL(url) ? url : checkURL(error_url) ? error_url : null
                 );
         if (!contentInAuthorLine) {
             builder.setDescription(content);
@@ -147,6 +157,18 @@ public final class craftiservi_discord extends JavaPlugin {
 
         chatChannel.sendMessageEmbeds(builder.build()).queue();
 
+    }
+
+    public static boolean checkURL(String URL){
+        try {
+            HttpURLConnection.setFollowRedirects(false);
+            HttpURLConnection con = (HttpURLConnection) new URL(URL).openConnection();
+            con.setRequestMethod("HEAD");
+            return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public Map<String, String> getAdvancementToDisplayMap() {

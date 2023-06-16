@@ -1,5 +1,5 @@
 name: craftiservi-discord
-version: '1.0'
+version: '1.1'
 main: com.x_tornado10.craftiservidiscord.craftiservi_discord
 api-version: 1.19
 authors: [ x_Tornado10 ]

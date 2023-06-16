@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: craftiservi_discord
-
+Main-Class: com.x_tornado10.craftiservidiscord.craftiservi_discord
