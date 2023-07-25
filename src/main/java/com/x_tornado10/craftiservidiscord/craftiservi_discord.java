@@ -16,17 +16,12 @@ import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.swing.*;
+
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public final class craftiservi_discord extends JavaPlugin {
     private static craftiservi_discord instance;
@@ -44,13 +39,13 @@ public final class craftiservi_discord extends JavaPlugin {
 
         instance = this;
 
+
         pl = getPluginLoader();
         pm = Bukkit.getPluginManager();
 
         /*
         cs = craftiservi.getInstance();
         logger = cs.getCustomLogger();
-
 
         if (pm.getPlugin(cs_name) == null) {
 

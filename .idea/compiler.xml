@@ -9,8 +9,5 @@
         <module name="craftiservi-discord" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="craftiservi-discord" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

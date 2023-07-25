@@ -1,9 +1,9 @@
 name: craftiservi-discord
 version: '${project.version}'
 main: com.x_tornado10.craftiservidiscord.craftiservi_discord
-api-version: 1.19
+api-version: 1.20
 authors: [ x_Tornado10 ]
 description: This Plugin is an extension for the crafti-servi plugin. This extension allows discord sync
-#depend:
-#  - Craftiservi
+depend:
+  - Craftiservi
 

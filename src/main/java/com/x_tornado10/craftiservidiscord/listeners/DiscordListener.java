@@ -21,6 +21,6 @@ public class DiscordListener extends ListenerAdapter {
         if (member == null || member.getUser().isBot()) return;
 
         String message = e.getMessage().getContentDisplay();
-        Bukkit.broadcastMessage(ChatColor.BLUE + "<" + member.getEffectiveName() + ">" + ChatColor.RESET + " " + message);
+        Bukkit.getServer().broadcastMessage(ChatColor.BLUE + "<" + member.getEffectiveName() + ">" + ChatColor.RESET + " " + message);
     }
 }
