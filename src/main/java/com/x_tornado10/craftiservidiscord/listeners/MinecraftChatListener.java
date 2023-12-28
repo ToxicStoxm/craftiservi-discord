@@ -1,6 +1,5 @@
 package com.x_tornado10.craftiservidiscord.listeners;
 
-import com.x_tornado10.craftiservi;
 import com.x_tornado10.craftiservidiscord.craftiservi_discord;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

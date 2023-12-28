@@ -1,18 +1,16 @@
 package com.x_tornado10.craftiservidiscord;
 
-import com.x_tornado10.craftiservi;
 import com.x_tornado10.craftiservidiscord.listeners.DiscordListener;
 import com.x_tornado10.craftiservidiscord.listeners.MinecraftChatListener;
-import com.x_tornado10.logger.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.exceptions.InvalidTokenException;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,69 +20,26 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 public final class craftiservi_discord extends JavaPlugin {
     private static craftiservi_discord instance;
     private JDA jda;
     private TextChannel chatChannel;
-    private PluginLoader pl;
     private PluginManager pm;
-    private final String cs_name = "Craftiservi";
-    private Logger logger;
-    private craftiservi cs;
     private final Map<String, String > advancementToDisplayMap = new HashMap<>();
+    private Logger logger;
 
     @Override
     public void onLoad() {
-
         instance = this;
-
-
-        pl = getPluginLoader();
         pm = Bukkit.getPluginManager();
-
-        /*
-        cs = craftiservi.getInstance();
-        logger = cs.getCustomLogger();
-
-        if (pm.getPlugin(cs_name) == null) {
-
-            getLogger().warning("Dependency: [" + cs_name + "] was not found!");
-            return;
-
-        }
-
-        Plugin craftiservi = pm.getPlugin(cs_name);
-
-        logger.dc_info("Dependency: [" + cs_name +"] was found and validated!");
-        logger.dc_info("Dependency: " + craftiservi.getName() + " v" + craftiservi.getDescription().getVersion() + ", Authors: " + craftiservi.getDescription().getAuthors());
-
-         */
+        logger = getLogger();
     }
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
-        /*
-        if (pm.getPlugin(cs_name) == null || !pm.getPlugin(cs_name).isEnabled()) {
-
-            getLogger().severe("Dependency: [" + cs_name + "] was not found or is not enabled!");
-            getLogger().severe("Dependency: Plugin can not start without [" + cs_name + "]!");
-            getLogger().severe("Disabling Plugin!");
-            pl.disablePlugin(this);
-            return;
-
-        }
-
-        Plugin craftiservi = pm.getPlugin(cs_name);
-
-        logger.dc_info("Dependency: [" + cs_name +"] is enabled!");
-        logger.dc_info("Dependency: " + craftiservi.getName() + " v" + craftiservi.getDescription().getVersion() + ", Authors: " + craftiservi.getDescription().getAuthors());
-        logger.dc_info("Dependency: Validated!");
-
-         */
-
         saveDefaultConfig();
         String bot_token = getConfig().getString("bot-token");
         try {
@@ -92,19 +47,25 @@ public final class craftiservi_discord extends JavaPlugin {
                     .build()
                     .awaitReady();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            logger.severe("Couldn't connect with discord!");
+            logger.severe("Please restart the server!");
+        } catch (InvalidTokenException e) {
+            logger.warning("Couldn't start Plugin. Please verify you set the right bot token in config.yml!");
         }
 
         if (jda == null) {
             pm.disablePlugin(this);
-            logger.dc_severe("Couldn't connect with discord!");
-            logger.dc_severe("Disabling Plugin!");
+            logger.severe("Couldn't connect with discord!");
+            logger.severe("Disabling Plugin!");
             return;
         }
 
         String chatChannelID = getConfig().getString("chat-channel-id");
-        if (chatChannelID != null) {
-            chatChannel = jda.getTextChannelById(chatChannelID);
+        try {
+                chatChannel = jda.getTextChannelById(Objects.requireNonNull(chatChannelID));
+                Objects.requireNonNull(chatChannel).getId();
+        } catch (NumberFormatException | NullPointerException e) {
+            logger.warning("Couldn't start Plugin. Please verify you set the right channel-id in config.yml!");
         }
 
         ConfigurationSection advancementMap = getConfig().getConfigurationSection("advancementMap");

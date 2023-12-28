@@ -6,7 +6,7 @@
 
     <groupId>com.x_tornado10</groupId>
     <artifactId>craftiservi-discord</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <name>craftiservi-discord</name>
@@ -71,14 +71,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.x_tornado10</groupId>
-            <artifactId>craftiservi</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-        <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-beta.9</version>
+            <version>5.0.0-beta.18</version>
         </dependency>
     </dependencies>
 </project>
