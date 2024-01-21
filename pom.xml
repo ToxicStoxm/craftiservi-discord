@@ -42,6 +42,7 @@
                     </filters>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <finalName>${project.artifactId}-Bukkit-${project.version}</finalName>
+                    <minimizeJar>true</minimizeJar>
                 </configuration>
                 <executions>
                     <execution>
@@ -83,6 +84,12 @@
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>5.0.0-beta.19</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>club.minnced</groupId>
+                    <artifactId>opus-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
