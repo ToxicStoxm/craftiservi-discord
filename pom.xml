@@ -42,17 +42,6 @@
                     </filters>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <finalName>${project.artifactId}-Bukkit-${project.version}</finalName>
-                    <artifactSet>
-                        <includes>
-                            <include>net.dv8tion:JDA*</include>
-                        </includes>
-                    </artifactSet>
-                    <relocations>
-                       <relocation>
-                           <pattern>net.dv8tion.jda</pattern>
-                           <shadedPattern>com.x_tornado10.craftiservi_discord.utils</shadedPattern>
-                       </relocation>
-                    </relocations>
                 </configuration>
                 <executions>
                     <execution>
