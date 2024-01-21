@@ -1,0 +1,3 @@
+com\x_tornado10\craftiservi_discord\craftiservi_discord.class
+com\x_tornado10\craftiservi_discord\listeners\MinecraftChatListener.class
+com\x_tornado10\craftiservi_discord\listeners\DiscordListener.class

@@ -6,7 +6,7 @@
 
     <groupId>com.x_tornado10</groupId>
     <artifactId>craftiservi-discord</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
     <name>craftiservi-discord</name>
@@ -23,23 +23,43 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.5.0</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <finalName>${project.artifactId}-Bukkit-${project.version}</finalName>
+                    <artifactSet>
+                        <includes>
+                            <include>net.dv8tion:JDA*</include>
+                        </includes>
+                    </artifactSet>
+                    <relocations>
+                       <relocation>
+                           <pattern>net.dv8tion.jda</pattern>
+                           <shadedPattern>com.x_tornado10.craftiservi_discord.utils</shadedPattern>
+                       </relocation>
+                    </relocations>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -73,7 +93,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-beta.18</version>
+            <version>5.0.0-beta.19</version>
         </dependency>
     </dependencies>
 </project>
